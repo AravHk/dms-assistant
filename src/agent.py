@@ -1,9 +1,5 @@
 import json, os, time
-<<<<<<< HEAD
 from src.config import MODEL, GEMINI_MODEL, LOG, MAX_TOOL_ROUNDS, TOP_K
-=======
-from src.config import MODEL, LOG, MAX_TOOL_ROUNDS, TOP_K
->>>>>>> ffbcd2e469a9b38fe6eb1be7f4ca1cf501a7333e
 from src.retriever import Retriever
 from src.safety import is_injection, format_hits, extract_citations
 from src import tools as T
@@ -22,7 +18,6 @@ REFUSAL = "Insufficient evidence in the knowledge base to answer this question."
 class Assistant:
     def __init__(self, k=TOP_K):
         self.r, self.k = Retriever(), k
-<<<<<<< HEAD
         self.client, self.provider = None, None
         self._hits, self._confident = {}, False
         gkey = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
@@ -35,16 +30,6 @@ class Assistant:
 
     @property
     def mode(self): return f"llm+rag ({self.provider})" if self.client else "retrieval-only"
-=======
-        self.client = None
-        self._hits, self._confident = {}, False
-        if os.getenv("ANTHROPIC_API_KEY"):
-            import anthropic
-            self.client = anthropic.Anthropic()
-
-    @property
-    def mode(self): return "llm+rag" if self.client else "retrieval-only"
->>>>>>> ffbcd2e469a9b38fe6eb1be7f4ca1cf501a7333e
 
     def _run_tool(self, name, a):
         if name == "search_kb":
@@ -64,7 +49,6 @@ class Assistant:
         return format_hits(hits)
 
     def _llm(self, q, use_tools=True):
-<<<<<<< HEAD
         if self.provider == "gemini":
             return self._gemini(q, use_tools)
         return self._claude(q, use_tools)
@@ -90,8 +74,6 @@ class Assistant:
         return REFUSAL + " (tool budget exhausted)"
 
     def _claude(self, q, use_tools=True):
-=======
->>>>>>> ffbcd2e469a9b38fe6eb1be7f4ca1cf501a7333e
         msgs = [{"role": "user", "content": q}]
         if not use_tools:
             r = self.client.messages.create(model=MODEL, max_tokens=900, system=BASELINE_SYSTEM, messages=msgs)
@@ -121,11 +103,7 @@ class Assistant:
         if use_rag and is_injection(q):
             flags.append("prompt_injection_suspected")
         if not use_rag:
-<<<<<<< HEAD
             ans = self._llm(q, use_tools=False) if self.client else "Baseline needs an LLM API key (GEMINI_API_KEY)."
-=======
-            ans = self._llm(q, use_tools=False) if self.client else "Baseline needs ANTHROPIC_API_KEY."
->>>>>>> ffbcd2e469a9b38fe6eb1be7f4ca1cf501a7333e
         elif flags and not self.client:
             ans = REFUSAL + " (the request looked like an attempt to override system rules)"
         else:
