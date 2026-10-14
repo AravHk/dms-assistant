@@ -22,7 +22,7 @@ Components: (a) ingestion pipeline, (b) BM25 lexical index with a query-coverage
 ![Ingest workflow](workflow_ingest.png)
 ![Query workflow](workflow_query.png)
 <<<<<<< HEAD
-Configuration (src/config.py): chunk 220 words, overlap 40, top-k 5, min query coverage 0.34, model from env `GEMINI_MODEL` (default gemini-2.5-flash), max 6 tool rounds. Retrieval-only fallback runs when no API key is present.
+Configuration (src/config.py): chunk 220 words, overlap 40, top-k 5, min query coverage 0.34, model from env `GEMINI_MODEL` (default gemini-3.8-flash), max 6 tool rounds. Retrieval-only fallback runs when no API key is present.
 =======
 Configuration (src/config.py): chunk 220 words, overlap 40, top-k 5, min query coverage 0.34, model from env `DMS_MODEL`, max 6 tool rounds. Retrieval-only fallback runs when no API key is present.
 >>>>>>> ffbcd2e469a9b38fe6eb1be7f4ca1cf501a7333e
