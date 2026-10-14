@@ -1,0 +1,6 @@
+id,title,url,source_type,year,licence
+eu_2019_2144,Regulation (EU) 2019/2144 General Safety Regulation,https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=CELEX:32019R2144,regulation,2019,EU legal text (reuse permitted)
+wiki_dms,Driver monitoring system (Wikipedia),https://en.wikipedia.org/wiki/Driver_monitoring_system,overview,2024,CC BY-SA
+# ADD MORE ROWS: Delegated Regulation on ADDW, Euro NCAP DMS protocol, NHTSA reports, open-access papers (arXiv / MDPI).
+# For PDFs you cannot fetch automatically, drop the file in data/raw/<id>.pdf and keep the row for metadata.
+# source_type must be one of: regulation | standard | research | overview | vendor
