@@ -1,4 +1,4 @@
-import json, os, time
+import json, os, re, time
 from src.config import MODEL, GEMINI_MODEL, LOG, MAX_TOOL_ROUNDS, TOP_K
 from src.retriever import Retriever
 from src.safety import is_injection, format_hits, extract_citations
@@ -19,6 +19,7 @@ class Assistant:
     def __init__(self, k=TOP_K):
         self.r, self.k = Retriever(), k
         self.client, self.provider = None, None
+        self.gmodel, self._rediscovered = GEMINI_MODEL, False
         self._hits, self._confident = {}, False
         gkey = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
         if gkey:
@@ -29,7 +30,33 @@ class Assistant:
             self.client, self.provider = anthropic.Anthropic(), "anthropic"
 
     @property
-    def mode(self): return f"llm+rag ({self.provider})" if self.client else "retrieval-only"
+    def mode(self):
+        if not self.client: return "retrieval-only"
+        return f"llm+rag (gemini: {self.gmodel})" if self.provider == "gemini" else f"llm+rag ({self.provider})"
+
+    def _discover_model(self):
+        """Ask the API which models this key can use and pick the newest plain 'flash' model."""
+        bad = ("lite", "image", "tts", "live", "embed", "audio", "robotics", "computer", "thinking", "exp", "latest")
+        found = []
+        for m in self.client.models.list():
+            n = m.name.replace("models/", "")
+            acts = getattr(m, "supported_actions", None) or []
+            if "flash" in n and "generateContent" in acts and not any(b in n for b in bad):
+                v = re.search(r"(\d+(?:\.\d+)?)", n)
+                found.append(("preview" not in n, float(v.group(1)) if v else 0.0, n))
+        if not found:
+            raise RuntimeError("No usable Gemini model found for this key. Set GEMINI_MODEL to a name from aistudio.google.com.")
+        return sorted(found, reverse=True)[0][2]
+
+    def _gen(self, contents, config):
+        try:
+            return self.client.models.generate_content(model=self.gmodel, contents=contents, config=config)
+        except Exception as e:
+            if ("NOT_FOUND" in str(e) or "404" in str(e)) and not self._rediscovered:
+                self._rediscovered = True
+                self.gmodel = self._discover_model()
+                return self.client.models.generate_content(model=self.gmodel, contents=contents, config=config)
+            raise
 
     def _run_tool(self, name, a):
         if name == "search_kb":
@@ -57,13 +84,13 @@ class Assistant:
         from google.genai import types
         if not use_tools:
             cfg = types.GenerateContentConfig(system_instruction=BASELINE_SYSTEM, max_output_tokens=900)
-            return self.client.models.generate_content(model=GEMINI_MODEL, contents=q, config=cfg).text or ""
+            return self._gen(q, cfg).text or ""
         cfg = types.GenerateContentConfig(
             system_instruction=SYSTEM, tools=[T.gemini_tool(types)], max_output_tokens=1500,
             automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True))
         contents = [types.Content(role="user", parts=[types.Part(text=q)])]
         for _ in range(MAX_TOOL_ROUNDS):
-            r = self.client.models.generate_content(model=GEMINI_MODEL, contents=contents, config=cfg)
+            r = self._gen(contents, cfg)
             calls = r.function_calls or []
             if not calls:
                 return r.text or REFUSAL + " (empty model response)"
