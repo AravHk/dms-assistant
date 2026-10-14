@@ -2,7 +2,10 @@ rank-bm25==0.2.2
 pypdf>=4.0
 streamlit>=1.35
 anthropic>=0.40
+<<<<<<< HEAD
 google-genai>=1.0
+=======
+>>>>>>> ffbcd2e469a9b38fe6eb1be7f4ca1cf501a7333e
 requests>=2.31
 beautifulsoup4>=4.12
 pandas>=2.0

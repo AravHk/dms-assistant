@@ -13,4 +13,7 @@ TOP_K = 5
 MIN_COVERAGE = 0.34    # share of query terms the best chunk must contain, else refuse
 MODEL = os.getenv("DMS_MODEL", "claude-sonnet-5-5")
 MAX_TOOL_ROUNDS = 6
+<<<<<<< HEAD
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+=======
+>>>>>>> ffbcd2e469a9b38fe6eb1be7f4ca1cf501a7333e

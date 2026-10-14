@@ -42,6 +42,7 @@ TOOL_SCHEMAS = [
       "total_frames": {"type": "integer"}, "closure_values": {"type": "array", "items": {"type": "number"}},
       "closed_threshold": {"type": "number"}}}},
 ]
+<<<<<<< HEAD
 
 def _upper_types(schema):
     """Convert a JSON-schema dict (lowercase types) into the uppercase form Gemini's Schema expects."""
@@ -58,3 +59,5 @@ def gemini_tool(types):
         types.FunctionDeclaration(name=t["name"], description=t["description"],
                                   parameters=types.Schema.model_validate(_upper_types(t["input_schema"])))
         for t in TOOL_SCHEMAS])
+=======
+>>>>>>> ffbcd2e469a9b38fe6eb1be7f4ca1cf501a7333e

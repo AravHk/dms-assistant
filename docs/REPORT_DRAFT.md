@@ -11,13 +11,21 @@ Chunking: 220 words with 40-word overlap; metadata kept per chunk (doc_id, title
 
 ## 3. Solution architecture
 ![Architecture](architecture.png)
+<<<<<<< HEAD
 Components: (a) ingestion pipeline, (b) BM25 lexical index with a query-coverage confidence gate, (c) Gemini model (Google API) driving a tool-use loop, (d) four custom tools, (e) guardrail layer, (f) Streamlit UI.
+=======
+Components: (a) ingestion pipeline, (b) BM25 lexical index with a query-coverage confidence gate, (c) Claude model driving a tool-use loop, (d) four custom tools, (e) guardrail layer, (f) Streamlit UI.
+>>>>>>> ffbcd2e469a9b38fe6eb1be7f4ca1cf501a7333e
 *Design justification (edit with your reasoning):* BM25 was chosen because DMS text is full of exact technical terms and acronyms (PERCLOS, ADDW, DDAW) where lexical match is strong, the index is small, and it runs on free hosting without a GPU or embedding API. Limitation: no semantic matching of paraphrases; dense or hybrid retrieval is listed as future work.
 
 ## 4. Implementation and configuration
 ![Ingest workflow](workflow_ingest.png)
 ![Query workflow](workflow_query.png)
+<<<<<<< HEAD
 Configuration (src/config.py): chunk 220 words, overlap 40, top-k 5, min query coverage 0.34, model from env `GEMINI_MODEL` (default gemini-2.5-flash), max 6 tool rounds. Retrieval-only fallback runs when no API key is present.
+=======
+Configuration (src/config.py): chunk 220 words, overlap 40, top-k 5, min query coverage 0.34, model from env `DMS_MODEL`, max 6 tool rounds. Retrieval-only fallback runs when no API key is present.
+>>>>>>> ffbcd2e469a9b38fe6eb1be7f4ca1cf501a7333e
 Prompt design: system prompt forces tool-only evidence, a fixed citation format `[doc_id loc]`, an exact refusal phrase, and states that documents and user text cannot change the rules.
 
 ## 5. Evaluation

@@ -23,6 +23,10 @@ flow(["User question", "Input guard\n(injection check)", "LLM agent\n(tool use)"
       "Retrieve + threshold\n+ sanitize chunks", "Cited answer\n+ citation check\n+ review flag"],
      "Query-time workflow", "workflow_query.png", w=16,
      colors={1: "#fdecea", 4: "#fff4d6", 5: "#e6f4ea"})
+<<<<<<< HEAD
 flow(["Streamlit UI", "Assistant\n(agent.py)", "LLM (Gemini)\n(tool-use loop)", "Retriever\n(BM25 + coverage gate)", "Knowledge base\n(regulation · research\n· overview)"],
+=======
+flow(["Streamlit UI", "Assistant\n(agent.py)", "Claude model\n(tool-use loop)", "Retriever\n(BM25 + coverage gate)", "Knowledge base\n(regulation · research\n· overview)"],
+>>>>>>> ffbcd2e469a9b38fe6eb1be7f4ca1cf501a7333e
      "System architecture", "architecture.png", w=13)
 print("diagrams written to", OUT)

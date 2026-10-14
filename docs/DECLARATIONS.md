@@ -11,9 +11,15 @@ Each AI tool or pre-trained model used (including for coding assistance) is decl
 
 | AI Model/Tool | Purpose | Artifact affected | Verified by student |
 |---|---|---|---|
+<<<<<<< HEAD
 | Claude (Anthropic, used via chat) | Coding assistance: scaffolding of ingestion, retrieval, agent, UI and evaluation code | `src/`, `app/`, `eval/`, `scripts/` | *[Describe: I ran the tests, read every file, ran the evaluation, modified X]* |
 | Claude (Anthropic) | Draft of report structure and README | `docs/REPORT_DRAFT.md`, `README.md` | *[Describe: I rewrote/edited sections, checked all claims against sources]* |
 | Google Gemini API (`GEMINI_MODEL`, default gemini-2.5-flash) | Runtime answer generation in the application | RAG agent answers | Evaluated on eval set; citations checked against retrieved chunks |
+=======
+| Claude (Anthropic) | Coding assistance: scaffolding of ingestion, retrieval, agent, UI and evaluation code | `src/`, `app/`, `eval/`, `scripts/` | *[Describe: I ran the tests, read every file, ran the evaluation, modified X]* |
+| Claude (Anthropic) | Draft of report structure and README | `docs/REPORT_DRAFT.md`, `README.md` | *[Describe: I rewrote/edited sections, checked all claims against sources]* |
+| Claude via API (`DMS_MODEL`) | Runtime answer generation in the application | RAG agent answers | Evaluated on eval set; citations checked against retrieved chunks |
+>>>>>>> ffbcd2e469a9b38fe6eb1be7f4ca1cf501a7333e
 | *[any other tool, e.g. diagram or grammar tools]* | | | |
 
 Signature: ______________________  Date: ____________

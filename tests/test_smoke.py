@@ -3,14 +3,21 @@ tmp = pathlib.Path(tempfile.mkdtemp())
 raw = tmp / "raw"; raw.mkdir()
 shutil.copy(pathlib.Path(__file__).parent / "fixtures" / "synthetic_test_doc.txt", raw / "synthetic.txt")
 os.environ["DMS_RAW"] = str(raw); os.environ["DMS_INDEX"] = str(tmp / "chunks.jsonl")
+<<<<<<< HEAD
 [os.environ.pop(k, None) for k in ("ANTHROPIC_API_KEY", "GEMINI_API_KEY", "GOOGLE_API_KEY")]
+=======
+os.environ.pop("ANTHROPIC_API_KEY", None)
+>>>>>>> ffbcd2e469a9b38fe6eb1be7f4ca1cf501a7333e
 
 from src import ingest, tools, safety
 from src.agent import Assistant
 
 def test_pipeline():
+<<<<<<< HEAD
     for k in ("ANTHROPIC_API_KEY", "GEMINI_API_KEY", "GOOGLE_API_KEY"): os.environ.pop(k, None)
     os.environ["DMS_INDEX"] = str(tmp / "chunks.jsonl")
+=======
+>>>>>>> ffbcd2e469a9b38fe6eb1be7f4ca1cf501a7333e
     ingest.main()
     bot = Assistant()
     r = bot.ask("What does PERCLOS measure?")
