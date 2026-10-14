@@ -14,7 +14,7 @@ Each AI tool or pre-trained model used (including for coding assistance) is decl
 <<<<<<< HEAD
 | Claude (Anthropic, used via chat) | Coding assistance: scaffolding of ingestion, retrieval, agent, UI and evaluation code | `src/`, `app/`, `eval/`, `scripts/` | *[Describe: I ran the tests, read every file, ran the evaluation, modified X]* |
 | Claude (Anthropic) | Draft of report structure and README | `docs/REPORT_DRAFT.md`, `README.md` | *[Describe: I rewrote/edited sections, checked all claims against sources]* |
-| Google Gemini API (`GEMINI_MODEL`, default gemini-2.5-flash) | Runtime answer generation in the application | RAG agent answers | Evaluated on eval set; citations checked against retrieved chunks |
+| Google Gemini API (`GEMINI_MODEL`, default gemini-3.8-flash) | Runtime answer generation in the application | RAG agent answers | Evaluated on eval set; citations checked against retrieved chunks |
 =======
 | Claude (Anthropic) | Coding assistance: scaffolding of ingestion, retrieval, agent, UI and evaluation code | `src/`, `app/`, `eval/`, `scripts/` | *[Describe: I ran the tests, read every file, ran the evaluation, modified X]* |
 | Claude (Anthropic) | Draft of report structure and README | `docs/REPORT_DRAFT.md`, `README.md` | *[Describe: I rewrote/edited sections, checked all claims against sources]* |
